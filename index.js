@@ -149,13 +149,13 @@ app.delete('/deleteColaborator', async (req, res) => {
 
 app.post('/addUser', async (req, res) => {
     console.log('addUser');
-    const { nombre, correo, password, rfc} = req.body;
+    const { username, email, pass, rfc} = req.body;
 
     try {
         const result = await db.query(`INSERT INTO users(username, email, pass, rfc) 
         VALUES ($1,$2,$3,$4) 
-        RETURNING *`, [nombre, correo, password, rfc]);
-        res.status(200).send('Usuario registrados con éxito');
+        RETURNING *`, [username, email, pass, rfc]);
+        res.status(201).send('Usuario registrado con éxito');
     }
     catch (error) {
         console.log('Error en addUser ' + error);
