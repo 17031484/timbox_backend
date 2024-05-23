@@ -146,3 +146,19 @@ app.delete('/deleteColaborator', async (req, res) => {
         res.status(500).json({ error: 'Internal server error ' + error });
     }
 });
+
+app.post('/addUser', async (req, res) => {
+    console.log('addUser');
+    const { nombre, correo, password, rfc} = req.body;
+
+    try {
+        const result = await db.query(`INSERT INTO users(username, email, pass, rfc) 
+        VALUES ($1,$2,$3,$4) 
+        RETURNING *`, [nombre, correo, password, rfc]);
+        res.status(200).send('Usuario registrados con éxito');
+    }
+    catch (error) {
+        console.log('Error en addUser ' + error);
+        res.status(500).json({ error: 'Internal server error ' + error });
+    }
+});
